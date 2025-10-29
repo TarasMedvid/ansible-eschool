@@ -1,27 +1,28 @@
----
-- name: Deploy eSchool demo (optimized)
-  hosts: all
-  become: no  # тут змінено
+name: CI/CD for eSchool Demo
 
-  tasks:
-    - name: Ensure project directory exists
-      ansible.builtin.file:
-        path: /home/taras/eschool
-        state: directory
-        mode: '0755'
+on:
+  push:
+    branches: [ "main" ]
 
-    - name: Copy project files
-      ansible.builtin.copy:
-        src: "/mnt/c/Users/Asus/Desktop/eschool-demo/"
-        dest: "/home/taras/eschool/"
-        owner: taras
-        group: taras
-        mode: '0755'
-        remote_src: no
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    - name: Run docker compose up
-      community.docker.docker_compose_v2:
-        project_src: /home/taras/eschool
-        build: always
-        state: present
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker images
+        run: docker compose -f docker-compose.yml build
+
+      - name: Run containers (test deployment)
+        run: docker compose -f docker-compose.yml up -d
+
+      - name: Verify running containers
+        run: docker ps -a
+
+      - name: Stop containers after test
+        run: docker compose down
