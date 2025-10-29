@@ -1,0 +1,30 @@
+name: CI/CD for eSchool Demo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker images
+      run: docker compose build
+
+    - name: Run containers
+      run: docker compose up -d
+
+    - name: Verify containers are running
+      run: docker ps -a
+
+    - name: Stop containers after test
+      run: docker compose down

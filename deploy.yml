@@ -1,0 +1,27 @@
+---
+- name: Deploy eSchool demo (optimized)
+  hosts: all
+  become: no  # тут змінено
+
+  tasks:
+    - name: Ensure project directory exists
+      ansible.builtin.file:
+        path: /home/taras/eschool
+        state: directory
+        mode: '0755'
+
+    - name: Copy project files
+      ansible.builtin.copy:
+        src: "/mnt/c/Users/Asus/Desktop/eschool-demo/"
+        dest: "/home/taras/eschool/"
+        owner: taras
+        group: taras
+        mode: '0755'
+        remote_src: no
+
+    - name: Run docker compose up
+      community.docker.docker_compose_v2:
+        project_src: /home/taras/eschool
+        build: always
+        state: present
+
