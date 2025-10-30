@@ -2,17 +2,17 @@
 ```
 ansible-eschool/
 │
-├── eschool-frontend/       # Вихідний код фронтенду (Angular)
+├── eschool-frontend/      
 │   ├── Dockerfile
 │   └── src/
 │
-├── eschool-backend/        # Вихідний код бекенду (Spring Boot)
+├── eschool-backend/       
 │   ├── Dockerfile
 │   └── src/
 │
 ├── monitoring/
-│   └── prometheus.yml      # Конфігурація Prometheus
+│   └── prometheus.yml      
 │
-├── docker-compose.yml       # Головний файл CI/CD інфраструктури
+├── docker-compose.yml       
 └── README.md
 ```
