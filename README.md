@@ -1,5 +1,5 @@
 # ansible-eschool
-'''
+```
 ansible-eschool/
 │
 ├── eschool-frontend/       # Вихідний код фронтенду (Angular)
@@ -15,4 +15,4 @@ ansible-eschool/
 │
 ├── docker-compose.yml       # Головний файл CI/CD інфраструктури
 └── README.md
-'''
+```
